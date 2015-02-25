@@ -270,8 +270,12 @@ angular.module('schemaForm').provider('schemaFormDecorators',
                     return scope.form.validationMessage;
                   }
 
+                  // add fallback to schemaError.message because
+                  // formDefaults.validationMessage are overriden somehow
+                  // follow https://github.com/Textalk/angular-schema-form/issues/213
                   return scope.form.validationMessage[schemaError.code] ||
-                         scope.form.validationMessage['default'];
+                         scope.form.validationMessage['default'] ||
+                         schemaError.message;
                 } else {
                   return scope.form.validationMessage.number ||
                          scope.form.validationMessage['default'] ||
